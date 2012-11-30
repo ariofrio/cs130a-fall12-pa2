@@ -2,19 +2,19 @@
 
 void binary_tree::print() const {
   print_preorder(root);
-  cout << endl;
+  std::cout << std::endl;
   print_inorder(root);
-  cout << endl;
+  std::cout << std::endl;
 }
 
-void binary_tree:print_preorder(const node* const root) const {
-  cout << root << " ";
+void binary_tree::print_preorder(const node* const root) const {
+  std::cout << root->value << " ";
   if(root->left != NULL) print_preorder(root->left);
   if(root->right != NULL) print_preorder(root->right);
 }
 
-void binary_tree:print_inorder(const node* const root) const {
+void binary_tree::print_inorder(const node* const root) const {
   if(root->left != NULL) print_inorder(root->left);
-  cout << root << " ";
+  std::cout << root->value << " ";
   if(root->right != NULL) print_inorder(root->right);
 }

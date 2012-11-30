@@ -1,8 +1,7 @@
 #include <iostream>
 #include <cstring>
-#include "iset.h"
-#include "avl.h"
 #include "bst.h"
+#include "avl.h"
 #include "splay.h"
 
 using namespace std;
@@ -30,8 +29,8 @@ bst* create_bst(string kind) {
 }
 
 int main(int argc, char** argv) {
-  bst* set = create_bst(argv[0]);
-  if(set == NULL) {
+  bst* bst= create_bst(argv[0]);
+  if(bst== NULL) {
     cerr << "please rename this executable 'avl', 'bst', or 'splay'" << endl;
     return EXIT_FAILURE;
   }
@@ -44,7 +43,7 @@ int main(int argc, char** argv) {
       int x;
       cin >> x;
       
-      if(set->insert(x)) {
+      if(bst->insert(x)) {
         cout << "Element inserted" << endl;
       } else {
         cout << "Element already present" << endl;
@@ -53,7 +52,7 @@ int main(int argc, char** argv) {
       int x;
       cin >> x;
 
-      if(set->contains(x)) {
+      if(bst->contains(x)) {
         cout << "Element accessed" << endl;
       } else {
         cout << "Element not found" << endl;
@@ -62,13 +61,13 @@ int main(int argc, char** argv) {
       int x;
       cin >> x;
 
-      if(set->erase(x)) {
+      if(bst->erase(x)) {
         cout << "Element deleted" << endl;
       } else {
         cout << "Element not found" << endl;
       }
     } else if(cmd.compare("print") == 0) {
-      set->print();
+      bst->print();
     }
   }
 }

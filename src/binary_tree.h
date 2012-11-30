@@ -2,6 +2,7 @@
 #define BINARY_TREE_H
 
 #include <cstddef>
+#include <iostream>
 
 class binary_tree {
 public:
@@ -19,8 +20,8 @@ protected:
 
   node* root = NULL;
 private:
-  void print_preorder(node* root) const;
-  void print_inorder(node* root) const;
+  void print_preorder(const node* const root) const;
+  void print_inorder(const node* const root) const;
 };
 
 #endif

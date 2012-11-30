@@ -3,6 +3,7 @@ LDFLAGS=
 
 SRC=\
      src/main.o \
+     src/binary_tree.o \
      src/bst.o \
      src/avl.o \
      src/splay.o
