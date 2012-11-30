@@ -19,16 +19,16 @@ for io in $TESTDIR/*.io; do
   tput sgr0
 
   # copy input lines and write output lines to run file
-  cat $io | grep '^> ' > $io.run
-  tail -n +2 $io | grepin | $prog | sed 's/^/< /' >> $io.run
+  cat $io | grep '^> ' | sed 's/^>/]/' > $io.run
+  tail -n +2 $io | grepin | $prog | sed 's/^/[ /' >> $io.run
 
   # compare run file with expected file, ignoring input
-  output=$(sdiff --width=$(tput cols) \
-    --ignore-matching-lines='^> ' \
-    $io $io.run)
+  output=$(sed -e 's/^</[/' -e 's/^>/]/' $io | 
+           sdiff --width=$(tput cols) \
+             --ignore-matching-lines='^> ' - $io.run)
   status=$?
 
-  echo "$output" | colordiff
+  echo "$output" | colordiff --difftype=diffy
   [ $status -eq 0 ] || exit $status
 done
 
