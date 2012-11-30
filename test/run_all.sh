@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 TESTDIR=$(dirname $0)
 
 grepin() {
@@ -28,7 +28,11 @@ for io in $TESTDIR/*.io; do
              --width=$(tput cols) - $io.run)
   status=$?
 
-  echo "$output" | colordiff --difftype diffy
+  if which colordiff 2> /dev/null; then
+    echo "$output" | colordiff --difftype diffy
+  else
+    echo "$output"
+  fi
   [ $status -eq 0 ] || exit $status
 done
 
