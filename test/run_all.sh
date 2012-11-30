@@ -1,11 +1,11 @@
 #!/bin/sh
 TESTDIR=$(dirname $0)
 
-function grepin() {
+grepin() {
   grep -oP '(?<=^> ).*$'
 }
 
-function grepout() {
+grepout() {
   grep -oP '(?<=^< ).*$'
 }
 
