@@ -24,7 +24,8 @@ for io in $TESTDIR/*.io; do
 
   # compare run file with expected file, ignoring input
   output=$(sed -e 's/^</[/' -e 's/^>/]/' $io | grep -v '^] ' | 
-           sdiff --width=$(tput cols) - $io.run)
+           sdiff --ignore-all-space \
+             --width=$(tput cols) - $io.run)
   status=$?
 
   echo "$output" | colordiff
