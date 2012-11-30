@@ -1,9 +1,9 @@
 #include "bst.h"
 
 bool bst::insert(int x) {
-  node** node = find(x);
-  if(*node == NULL) {
-    *node = new struct node(x);
+  node** n= find(x);
+  if(*n== NULL) {
+    *n= new struct node(x);
     return true;
   } else {
     return false; // already present
@@ -11,8 +11,8 @@ bool bst::insert(int x) {
 }
 
 bool bst::contains(int x) {
-  node** node = find(x);
-  if(*node == NULL) {
+  node** n= find(x);
+  if(*n== NULL) {
     return false;
   } else {
     return true;
@@ -20,20 +20,30 @@ bool bst::contains(int x) {
 }
 
 bool bst::erase(int x) {
-  node** node = find(x);
-  if((*node) == NULL) {
+  erase(find(x));
+}
+
+bool bst::erase(node** n) {
+  if((*n) == NULL) {
     return false;
   } else {
-    if((*node)->left == NULL && (*node)->right == NULL) {
-      delete *node;
-      *node = NULL;
-    } else if((*node)->left != NULL && (*node)->left != NULL) {
-      //find_smallest(&((*node)->right));
-      // TODO!
-    } else if((*node)->left != NULL) {
-    } else if((*node)->right != NULL) {
+    if((*n)->left == NULL && (*n)->right == NULL) {
+      delete *n;
+      *n = NULL;
+    } else if((*n)->left != NULL && (*n)->right != NULL) {
+      node** successor = find_smallest(&((*n)->right));
+      (*n)-> value = (*successor)->value;
+      erase(successor);
     } else {
-      throw "great scott! this is impossible! see bst.cpp";
+      node* child;
+      if((*n)->left != NULL) {
+        child = (*n)->left;
+      } else {
+        node* child = (*n)->right;
+      }
+
+      delete *n;
+      *n = child;
     }
     return true;
   }

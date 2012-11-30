@@ -13,6 +13,8 @@ public:
   virtual bool contains(int x);
   virtual bool erase(int x);
 private:
+  bool erase(node** node);
+
   node** find(int x);
   node** find_smallest(node** root);
 };
