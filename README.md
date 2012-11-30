@@ -17,7 +17,9 @@ See the programming assignment on the [CS 130A course website][pdf].
     ./bst
     ./splay
 
-## Unit testing
+## Correctness testing
+
+Will run test cases in the `test/` folder.
 
     make test
 
