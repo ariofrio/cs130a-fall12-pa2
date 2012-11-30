@@ -7,12 +7,22 @@
 
 using namespace std;
 
+bool ends_with(string const &haystack, string const &suffix) {
+  if(haystack.length() >= suffix.length()) {
+    return 0 == haystack.compare(
+        haystack.length()-suffix.length(),
+        suffix.length(), suffix);
+  } else {
+    return false;
+  }
+}
+
 bst* create_bst(string kind) {
-  if(kind.compare("avl") == 0) {
+  if(ends_with(kind, "avl")) {
     return new avl();
-  } else if(kind.compare("bst") == 0) {
+  } else if(ends_with(kind, "bst")) {
     return new bst();
-  } else if(kind.compare("splay") == 0) {
+  } else if(ends_with(kind, "splay")) {
     return new splay();
   } else {
     return NULL;
