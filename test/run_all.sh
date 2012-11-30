@@ -14,21 +14,20 @@ for io in $TESTDIR/*.io; do
 
   # print header/title
   tput bold
-  printf "%-$[$(tput cols)/2-3]s   %s\n" $io.run \
+  printf "%-$[$(tput cols)/2-3]s   %s\n" $io \
     "cat $io | grepin | $prog"
   tput sgr0
 
   # copy input lines and write output lines to run file
-  cat $io | grep '^> ' | sed 's/^>/]/' > $io.run
-  tail -n +2 $io | grepin | $prog | sed 's/^/[ /' >> $io.run
+  #cat $io | grep '^> ' | sed 's/^>/]/' > $io.run
+  tail -n +2 $io | grepin | $prog | sed 's/^/[ /' > $io.run
 
   # compare run file with expected file, ignoring input
-  output=$(sed -e 's/^</[/' -e 's/^>/]/' $io | 
-           sdiff --width=$(tput cols) \
-             --ignore-matching-lines='^> ' - $io.run)
+  output=$(sed -e 's/^</[/' -e 's/^>/]/' $io | grep -v '^] ' | 
+           sdiff --width=$(tput cols) - $io.run)
   status=$?
 
-  echo "$output" | colordiff --difftype=diffy
+  echo "$output" | colordiff
   [ $status -eq 0 ] || exit $status
 done
 
