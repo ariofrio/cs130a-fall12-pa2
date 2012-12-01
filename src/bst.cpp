@@ -39,7 +39,7 @@ bool bst::erase(node** n) {
       if((*n)->left != NULL) {
         child = (*n)->left;
       } else {
-        node* child = (*n)->right;
+        child = (*n)->right;
       }
 
       delete *n;
