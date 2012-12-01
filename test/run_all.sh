@@ -28,7 +28,7 @@ for io in $TESTDIR/*.io; do
              --width=$(tput cols) - $io.run)
   status=$?
 
-  if which colordiff 2> /dev/null; then
+  if which colordiff &> /dev/null; then
     echo "$output" | colordiff --difftype diffy
   else
     echo "$output"
