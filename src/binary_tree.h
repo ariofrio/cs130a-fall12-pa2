@@ -14,10 +14,14 @@ public:
 protected:
   struct node {
     int value;
+    int data;
+
     node* left;
     node* right;
 
     node(int value) : value(value), left(NULL), right(NULL) {}
+    node(int value, int data) : 
+      value(value), data(data), left(NULL), right(NULL) {}
   };
 
   node* root;
