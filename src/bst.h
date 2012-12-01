@@ -12,6 +12,7 @@ public:
   virtual bool insert(int x);
   virtual bool contains(int x);
   virtual bool erase(int x);
+
 private:
   bool erase(node** node);
 

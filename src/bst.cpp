@@ -1,9 +1,9 @@
 #include "bst.h"
 
 bool bst::insert(int x) {
-  node** n= find(x);
-  if(*n== NULL) {
-    *n= new struct node(x);
+  node** n = find(x);
+  if(*n == NULL) {
+    *n = new struct node(x);
     return true;
   } else {
     return false; // already present
@@ -11,8 +11,8 @@ bool bst::insert(int x) {
 }
 
 bool bst::contains(int x) {
-  node** n= find(x);
-  if(*n== NULL) {
+  node** n = find(x);
+  if(*n == NULL) {
     return false;
   } else {
     return true;
