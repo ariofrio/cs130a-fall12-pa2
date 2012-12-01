@@ -8,13 +8,15 @@ void binary_tree::print() const {
 }
 
 void binary_tree::print_preorder(const node* const root) const {
+  if(root == NULL) return;
   std::cout << root->value << " ";
-  if(root->left != NULL) print_preorder(root->left);
-  if(root->right != NULL) print_preorder(root->right);
+  print_preorder(root->left);
+  print_preorder(root->right);
 }
 
 void binary_tree::print_inorder(const node* const root) const {
-  if(root->left != NULL) print_inorder(root->left);
+  if(root == NULL) return;
+  print_inorder(root->left);
   std::cout << root->value << " ";
-  if(root->right != NULL) print_inorder(root->right);
+  print_inorder(root->right);
 }
