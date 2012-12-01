@@ -2,7 +2,6 @@
 #define BINARY_TREE_H
 
 #include <cstddef>
-#include <iostream>
 
 class binary_tree {
 public:

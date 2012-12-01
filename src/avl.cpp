@@ -20,30 +20,76 @@ bool avl::insert_into(int x, node* &current) {
       ret = insert_into(x, current->right);
     }
     if(ret) {
-      if(height(current->left) - 
-          height(current->right) == 2) {
-
-        if(x < current->left->value) {
-          rotate_with_left_child(current);
-        } else {
-          rotate_with_right_child(current->left);
-          rotate_with_left_child(current);
-        }
-
-      } else if(height(current->right) - 
-          height(current->left) == 2) {
-
-        if(current->right->value < x) {
-          rotate_with_right_child(current);
-        } else {
-          rotate_with_left_child(current->right);
-          rotate_with_right_child(current);
-        }
-
-      }
+      ensure_balanced(x, current);
       update_height(current);
     }
     return ret;
+  }
+}
+
+bool avl::erase(int x) {
+  return erase_from(x, root);
+}
+
+bool avl::erase_from(int x, node* &current) {/*
+  if(current == NULL) {
+    return false;
+  } else if(current->value == x) {
+    if(current->left == NULL && current->right == NULL) {
+      delete current;
+      current = NULL;
+    } else if(current->left != NULL && current->right != NULL) {
+      node* &successor = *bst::find_smallest(&(current->right));
+      current->value = successor->value;
+      erase_from(successor);
+    } else {
+      node* child;
+      if(current->left != NULL) {
+        child = current->left;
+      } else {
+        child = current->right;
+      }
+
+      delete current;
+      current = child;
+    }
+    return true;
+  } else {
+    bool ret;
+    if(x < current->value) {
+      ret = erase_from(x, current->left);
+    } else {
+      ret = erase_from(x, current->right);
+    }
+    if(ret) {
+      ensure_balanced(x, current);
+      update_height(current);
+    }
+    return ret;
+  }
+*/}
+
+void avl::ensure_balanced(int x, node* &current) {
+  if(height(current->left) - 
+      height(current->right) == 2) {
+
+    if(x < current->left->value) {
+      rotate_with_left_child(current);
+    } else {
+      rotate_with_right_child(current->left);
+      rotate_with_left_child(current);
+    }
+
+  } else if(height(current->right) - 
+      height(current->left) == 2) {
+
+    if(current->right->value < x) {
+      rotate_with_right_child(current);
+    } else {
+      rotate_with_left_child(current->right);
+      rotate_with_right_child(current);
+    }
+
   }
 }
 

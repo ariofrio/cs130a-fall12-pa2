@@ -1,4 +1,5 @@
 #include "binary_tree.h"
+#include <iostream>
 
 void binary_tree::print() const {
   print_preorder(root);

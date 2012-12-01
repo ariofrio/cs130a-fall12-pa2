@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include "bst.h"
+#include "unbalanced.h"
 #include "avl.h"
 #include "splay.h"
 
@@ -21,7 +22,7 @@ bst* create_bst(string kind) {
   if(ends_with(kind, "avl")) {
     return new avl();
   } else if(ends_with(kind, "bst")) {
-    return new bst();
+    return new unbalanced();
   } else if(ends_with(kind, "splay")) {
     return new splay();
   } else {
