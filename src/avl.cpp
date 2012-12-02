@@ -1,95 +1,119 @@
-#include <algorithm>
-#include <iostream>
 #include "avl.h"
+#include <algorithm>
 
 bool avl::insert(int x) {
-  return insert_into(x, root);
+  return insert(x, root);
 }
 
-bool avl::insert_into(int x, node* &current) {
-  if(current == NULL) {
-    current = new struct node(x, 0);
+bool avl::insert(int x, node* &p) {
+  if(p == NULL) {
+    p = new struct node(x, 0);
     return true;
-  } else if(current->value == x) {
+  } else if(p->value == x) {
     return false;
   } else {
     bool ret;
-    if(x < current->value) {
-      ret = insert_into(x, current->left);
-    } else {
-      ret = insert_into(x, current->right);
-    }
+    if(x < p->value) ret = insert(x, p->left);
+    else ret = insert(x, p->right);
     if(ret) {
-      ensure_balanced(x, current);
-      update_height(current);
+      ensure_balanced(p);
+      update_height(p);
     }
+    return ret;
+  }
+}
+
+bool avl::contains(int x) {
+  return contains(x, root);
+}
+
+bool avl::contains(int x, node* &p) {
+  if(p == NULL) {
+    return false;
+  } else if(p->value == x) {
+    return true;
+  } else {
+    bool ret;
+    if(x < p->value) ret = contains(x, p->left);
+    else ret = contains(x, p->right);
     return ret;
   }
 }
 
 bool avl::erase(int x) {
-  return erase_from(x, root);
+  return erase(x, root);
 }
 
-bool avl::erase_from(int x, node* &current) {/*
-  if(current == NULL) {
+bool avl::erase(int x, node* &p) {
+  if(p == NULL) {
     return false;
-  } else if(current->value == x) {
-    if(current->left == NULL && current->right == NULL) {
-      delete current;
-      current = NULL;
-    } else if(current->left != NULL && current->right != NULL) {
-      node* &successor = *bst::find_smallest(&(current->right));
-      current->value = successor->value;
-      erase_from(successor);
-    } else {
-      node* child;
-      if(current->left != NULL) {
-        child = current->left;
-      } else {
-        child = current->right;
-      }
-
-      delete current;
-      current = child;
-    }
+  } else if(p->value == x) {
+    erase_node(p);
     return true;
   } else {
     bool ret;
-    if(x < current->value) {
-      ret = erase_from(x, current->left);
-    } else {
-      ret = erase_from(x, current->right);
-    }
+    if(x < p->value) ret = erase(x, p->left);
+    else ret = erase(x, p->right);
     if(ret) {
-      ensure_balanced(x, current);
-      update_height(current);
+      ensure_balanced(p);
+      update_height(p);
     }
     return ret;
   }
-*/}
+}
 
-void avl::ensure_balanced(int x, node* &current) {
-  if(height(current->left) - 
-      height(current->right) == 2) {
+// p must not be NULL
+void avl::erase_node(node* &p) {
+  if(p->left == NULL && p->right == NULL) {
+    delete p;
+    p = NULL;
+  } else if(p->left != NULL && p->right != NULL) {
+    replace_with_successor(p);
+  } else {
+    node* child;
+    if(p->left != NULL) child = p->left;
+    else child = p->right;
+    delete p;
+    p = child;
+  }
+}
 
-    if(x < current->left->value) {
-      rotate_with_left_child(current);
+void avl::replace_with_successor(node* &p) {
+  replace_with_successor(p, p->right);
+}
+
+void avl::replace_with_successor(node* &p, node* &s) {
+  if(s->left == NULL) {
+    p->value = s->value;
+    p->data = s->data;
+    erase_node(s); // never has left child
+  } else {
+    replace_with_successor(p, s->left);
+    ensure_balanced(p);
+  }
+  update_height(p);
+}
+
+void avl::ensure_balanced(node* &p) {
+  if(height(p->left) - height(p->right) == 2) {
+    if(height(p->left->left) > height(p->left->right)) {
+      rotate_with_left_child(p);
+    } else if(height(p->left->left) < height(p->left->right)) {
+      rotate_with_right_child(p->left);
+      rotate_with_left_child(p);
     } else {
-      rotate_with_right_child(current->left);
-      rotate_with_left_child(current);
+      rotate_with_left_child(p);
     }
-
-  } else if(height(current->right) - 
-      height(current->left) == 2) {
-
-    if(current->right->value < x) {
-      rotate_with_right_child(current);
+  } else if(height(p->right) - height(p->left) == 2) {
+    if(height(p->right->right) > height(p->right->left)) {
+      rotate_with_right_child(p);
+    } else if(height(p->right->right) < height(p->right->left)) {
+      rotate_with_left_child(p->right);
+      rotate_with_right_child(p);
     } else {
-      rotate_with_left_child(current->right);
-      rotate_with_right_child(current);
+      rotate_with_right_child(p);
     }
-
+  } else {
   }
 }
 
@@ -111,15 +135,12 @@ void avl::rotate_with_right_child(node* &q) {
   q = p;
 }
 
-void avl::update_height(node* p) {
+void avl::update_height(node* const p) {
   p->data = 1 + std::max(height(p->left), height(p->right));
 }
 
-int avl::height(const node* const p) const {
-  if(p == NULL) {
-    return -1;
-  } else {
-    return p->data;
-  }
+int avl::height(const node* const p) {
+  if(p == NULL) return -1;
+  else return p->data;
 }
 
