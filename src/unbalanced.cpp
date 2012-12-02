@@ -59,9 +59,7 @@ void unbalanced::erase_node(node* &p) {
     delete p;
     p = NULL;
   } else if(p->left != NULL && p->right != NULL) {
-    node* &successor = find_smallest(p->right);
-    p->value = successor->value;
-    erase_node(successor); // never has left child
+    replace_with_successor(p);
   } else {
     node* child;
     if(p->left != NULL) child = p->left;
@@ -71,8 +69,16 @@ void unbalanced::erase_node(node* &p) {
   }
 }
 
-unbalanced::node* &unbalanced::find_smallest(node* &p) {
-  if(p->left == NULL) return p;
-  else return find_smallest(p->left);
+void unbalanced::replace_with_successor(node* &p) {
+  replace_with_successor(p, p->right);
+}
+
+void unbalanced::replace_with_successor(node* &p, node* &s) {
+  if(s->left == NULL) {
+    p->value = s->value;
+    erase_node(s); // never has left child
+  } else {
+    replace_with_successor(p, s->left);
+  }
 }
 

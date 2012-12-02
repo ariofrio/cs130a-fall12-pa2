@@ -14,7 +14,8 @@ public:
   static bool contains(int x, node* &p);
   static bool erase(int x, node* &p);
   static void erase_node(node* &p);
-  static node* &find_smallest(node* &p);
+  static void replace_with_successor(node* &p);
+  static void replace_with_successor(node* &p, node* &s);
 };
 
 #endif
