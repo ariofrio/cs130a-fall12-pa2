@@ -9,6 +9,7 @@ public:
 
   // print space-separated pre-order, then in-order traversals
   void print() const;
+  static bool verbose;
 
 protected:
   struct node {
@@ -24,9 +25,11 @@ protected:
   };
 
   node* root;
+
 private:
-  void print_preorder(const node* const root) const;
-  void print_inorder(const node* const root) const;
+  static void print_preorder(const node* const root);
+  static void print_inorder(const node* const root);
+  static void print_unique(const node* const root);
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include "unbalanced.h"
 #include "avl.h"
 #include "splay.h"
+#include "binary_tree.h"
 
 bool ends_with(std::string const &haystack, 
     std::string const &suffix) {
@@ -41,7 +42,9 @@ int main(int argc, char** argv) {
     string cmd;
     cin >> cmd;
 
-    if(cmd.compare("insert") == 0) {
+    if(cmd.compare("verbose") == 0) {
+      binary_tree::verbose = true;
+    } else if(cmd.compare("insert") == 0) {
       int x;
       cin >> x;
       
