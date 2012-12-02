@@ -6,9 +6,8 @@
 #include "avl.h"
 #include "splay.h"
 
-using namespace std;
-
-bool ends_with(string const &haystack, string const &suffix) {
+bool ends_with(std::string const &haystack, 
+    std::string const &suffix) {
   if(haystack.length() >= suffix.length()) {
     return 0 == haystack.compare(
         haystack.length()-suffix.length(),
@@ -18,7 +17,7 @@ bool ends_with(string const &haystack, string const &suffix) {
   }
 }
 
-bst* create_bst(string kind) {
+bst* create_bst(std::string kind) {
   if(ends_with(kind, "avl")) {
     return new avl();
   } else if(ends_with(kind, "bst")) {
@@ -31,6 +30,7 @@ bst* create_bst(string kind) {
 }
 
 int main(int argc, char** argv) {
+  using namespace std;
   bst* bst= create_bst(argv[0]);
   if(bst== NULL) {
     cerr << "please rename this executable 'avl', 'bst', or 'splay'" << endl;
