@@ -9,6 +9,7 @@ grepout() {
   grep -oP '(?<=^< ).*$'
 }
 
+status=0
 for io in $TESTDIR/*.io; do
   prog=$(head -n1 $io | grepin)
 
@@ -20,19 +21,22 @@ for io in $TESTDIR/*.io; do
 
   # copy input lines and write output lines to run file
   #cat $io | grep '^> ' | sed 's/^>/]/' > $io.run
-  tail -n +2 $io | grepin | $prog | sed 's/^/[ /' > $io.run
+  tail -n +2 $io | grepin | $prog >& $io.run
 
   # compare run file with expected file, ignoring input
-  output=$(sed -e 's/^</[/' -e 's/^>/]/' $io | grep -v '^] ' | 
+  output=$(sed -e 's/^< //' -e 's/^>/]/' $io | grep -v '^] ' | 
            sdiff --ignore-space-change \
              --width=$(tput cols) - $io.run)
-  status=$?
+  this_status=$?
+  [ $status -eq 0 ] && status=$this_status
 
   if which colordiff &> /dev/null; then
     echo "$output" | colordiff --difftype diffy
   else
     echo "$output"
   fi
-  [ $status -eq 0 ] || exit $status
+  [ -z $PASSTHROUGH ] && [ $status -ne 0 ] && exit $status
 done
+
+exit $status
 
