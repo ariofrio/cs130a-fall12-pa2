@@ -77,9 +77,10 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
       * + dt { margin-top: 0.5em; }
       dd { margin-left: 1em; }
       dd > dl > dt { display: inline; }
+      dd > dl > dd + dt:before { content: "\a"; white-space: pre; }
       dd > dl > dt:after { content: ": "; }
       dd > dl > dd { display: inline; margin: 0; }
-      dd > dl > dd:after { content: ".\a"; white-space: pre; }
+      dd > dl > dd:after { content: "."; }
     </style>
   </head>
   <body>
