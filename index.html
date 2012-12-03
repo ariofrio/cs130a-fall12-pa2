@@ -46,18 +46,40 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
     <style>
       body {
         font-family: Arial;
-      }
-      #description {
-        margin: 0 auto;
-        width: 30em;
+        font-size: 14px;
+        line-height: 1.3;
       }
       #visualization {
         margin: 0 auto;
         width: 1100px;
         height: 400px;
       }
+      #description {
+        margin: 0 auto;
+        margin-top: 2em;
+        width: 900px;
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        -o-column-count: 3;
+        -ms-column-count: 3;
+        column-count: 3;
+        text-align: justify;
+      }
+      dl {
+        margin: 0;
+        -webkit-column-break-inside: avoid;
+        -moz-column-break-inside: avoid;
+        -o-column-break-inside: avoid;
+        -ms-column-break-inside: avoid;
+        break-inside: avoid;
+      }
       dt { font-weight: bold; }
-      dl >
+      * + dt { margin-top: 0.5em; }
+      dd { margin-left: 1em; }
+      dd > dl > dt { display: inline; }
+      dd > dl > dt:after { content: ": "; }
+      dd > dl > dd { display: inline; margin: 0; }
+      dd > dl > dd:after { content: ".\a"; white-space: pre; }
     </style>
   </head>
   <body>
@@ -97,6 +119,8 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
             <dd>on first delete, smallest element is splayed, somewhat balancing the tree</dd>
           </dl>
         </dd>
+      </dl>
+      <dl>
         <dt>insert in increasing order (repeated)</dt>
         <dt>access in decreasing order</dt>
         <dd>
@@ -120,6 +144,8 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
             <dd>best, balanced from previous access operations, and every other element is found at the root</dd>
           </dl>
         </dd>
+      </dl>
+      <dl>
         <dt>insert in random order</dt>
         <dd>
           <dl>
@@ -128,18 +154,18 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
             <dt>AVL Tree</dt>
             <dd>worst, height book-keeping and rotations</dd>
             <dt>Splay Tree</dt>
-            <dd>unknown, <em>should</em>be same as Naive BST</dd>
+            <dd>best, no overhead</dd>
           </dl>
         </dd>
         <dt>access in same random order</dt>
         <dd>
           <dl>
             <dt>Naive BST</dt>
-            <dd>best, no overhead</dd>
+            <dd>somewhat balanced</dd>
             <dt>AVL Tree</dt>
-            <dd>TODO</dd>
+            <dd>best, most balanced</dd>
             <dt>Splay Tree</dt>
-            <dd>worst, splaying is useless (no multiple access, value of each access is not near previous access)</dd>
+            <dd>worst, benefits from splaying are limited (no multiple access, value of each access is not near previous access)</dd>
           </dl>
         </dd>
         <dt>delete in same random order</dt>
@@ -148,9 +174,9 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
             <dt>Naive BST</dt>
             <dd>best, local deletion</dd>
             <dt>AVL Tree</dt>
-            <dd>best, local deletion</dd>
+            <dd>each deletion causes rebalancing</dd>
             <dt>Splay Tree</dt>
-            <dd>worst, each deletion causes splaying that causes no benefit (no multi-access, no nearness)</dd>
+            <dd>worst, each deletion causes splaying with limited payoffs</dd>
           </dl>
         </dd>
       </dl>
