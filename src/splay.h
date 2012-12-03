@@ -13,8 +13,8 @@ class splay : public bst {
   static bool contains(int x, node* &n, node** p, node** g);
   static bool erase(int x, node* &p);
   static void erase_node(node* &p);
-  static void replace_with_successor(node* &p);
-  static void replace_with_successor(node* &p, node* &s);
+  static void replace_with_predecessor(node* &p);
+  static void replace_with_predecessor(node* &p, node* &s);
 
   static void do_splay(node* x, node** p, node** g);
   static void do_splay(node* x, node* &p);

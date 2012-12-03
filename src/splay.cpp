@@ -48,6 +48,7 @@ bool splay::contains(int x, node* &n, node** p, node** g) {
 }
 
 bool splay::erase(int x) {
+  contains(x); // splay the node to be deleted by accessing it 
   return erase(x, root);
 }
 
@@ -71,7 +72,7 @@ void splay::erase_node(node* &p) {
     delete p;
     p = NULL;
   } else if(p->left != NULL && p->right != NULL) {
-    replace_with_successor(p);
+    replace_with_predecessor(p);
   } else {
     node* child;
     if(p->left != NULL) child = p->left;
@@ -81,16 +82,16 @@ void splay::erase_node(node* &p) {
   }
 }
 
-void splay::replace_with_successor(node* &p) {
-  replace_with_successor(p, p->right);
+void splay::replace_with_predecessor(node* &p) {
+  replace_with_predecessor(p, p->left);
 }
 
-void splay::replace_with_successor(node* &p, node* &s) {
-  if(s->left == NULL) {
+void splay::replace_with_predecessor(node* &p, node* &s) {
+  if(s->right == NULL) {
     p->value = s->value;
-    erase_node(s); // never has left child
+    erase_node(s); // never has right child
   } else {
-    replace_with_successor(p, s->left);
+    replace_with_predecessor(p, s->right);
   }
 }
 
