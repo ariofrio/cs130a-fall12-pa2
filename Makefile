@@ -37,6 +37,6 @@ bench: tree_testing
 	./tree_testing $(BENCHFLAGS)
 
 clean:
-	rm -f $(SRC)
+	rm -f src/*.o
 	rm -f bst avl splay tree_testing
 
