@@ -4,7 +4,9 @@
 #include "bst.h"
 
 class splay : public bst {
-  virtual ~splay() {}
+  virtual ~splay() {
+    while(root != NULL) erase(root->value);
+  }
   virtual bool insert(int x);
   virtual bool contains(int x);
   virtual bool erase(int x);

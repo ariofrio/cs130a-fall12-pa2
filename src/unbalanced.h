@@ -5,7 +5,9 @@
 
 class unbalanced: public bst {
 public:
-  virtual ~unbalanced() {}
+  virtual ~unbalanced() {
+    while(root != NULL) erase(root->value);
+  }
   virtual bool insert(int x);
   virtual bool contains(int x);
   virtual bool erase(int x);
@@ -19,5 +21,4 @@ public:
 };
 
 #endif
-
 

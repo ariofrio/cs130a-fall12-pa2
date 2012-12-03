@@ -5,6 +5,7 @@
 
 class binary_tree {
 public:
+  virtual ~binary_tree() {}
   binary_tree() : root(NULL) {}
 
   // print space-separated pre-order, then in-order traversals
