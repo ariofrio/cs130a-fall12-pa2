@@ -6,7 +6,7 @@ bool unbalanced::insert(int x) {
 
 bool unbalanced::insert(int x, node* &p) {
   if(p == NULL) {
-    p = new struct node(x);
+    p = new struct node(x, 0);
     return true;
   } else if(p->value == x) {
     return false;

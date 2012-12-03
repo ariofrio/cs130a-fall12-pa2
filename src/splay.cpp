@@ -7,7 +7,7 @@ bool splay::insert(int x) {
 
 bool splay::insert(int x, node* &p) {
   if(p == NULL) {
-    p = new struct node(x);
+    p = new struct node(x, 0);
     return true;
   } else if(p->value == x) {
     return false;
