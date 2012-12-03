@@ -1,0 +1,160 @@
+<!--
+You are free to copy and use this sample in accordance with the terms of the
+Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
+-->
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Google Visualization API Sample
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+        // To see the data that this visualization uses, browse to
+        // https://docs.google.com/spreadsheet/ccc?key=0Aktsct0Ua9XhdGhSMzJJS3lmczA3MmxhU1ZmQ2FMcmc
+        var query = new google.visualization.Query(
+            'https://docs.google.com/spreadsheet/tq?range=A1%3AD10&key=0Aktsct0Ua9XhdGhSMzJJS3lmczA3MmxhU1ZmQ2FMcmc&gid=0&headers=-1');
+      
+        // Send the query with a callback function.
+        query.send(handleQueryResponse);
+      }
+      
+      function handleQueryResponse(response) {
+        if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+      
+        var data = response.getDataTable();
+        new google.visualization.ColumnChart(document.getElementById('visualization')).
+            draw(data,
+                 {title: "10,000 operations on Binary Search Trees",
+                  width: 1100, height: 400,
+                  vAxis: {title: "Time (µs)", logScale: true}}
+            );
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+    <style>
+      body {
+        font-family: Arial;
+      }
+      #description {
+        margin: 0 auto;
+        width: 30em;
+      }
+      #visualization {
+        margin: 0 auto;
+        width: 1100px;
+        height: 400px;
+      }
+      dt { font-weight: bold; }
+      dl >
+    </style>
+  </head>
+  <body>
+    <div id="visualization"></div>
+    <div id="description">
+      <dl>
+        <dt>insert in increasing order</dt>
+        <dd>
+          <dl>
+            <dt>Naive BST</dt>
+            <dd>worst, degenerates to linked list</dd>
+            <dt>AVL Tree</dt>
+            <dd>best, self-balances</dd>
+            <dt>Splay Tree</dt>
+            <dd>worst, degenerates to linked list (no splaying per sample input)</dd>
+          </dl>
+        </dd>
+        <dt>access in increasing order</dt>
+        <dd>
+          <dl>
+            <dt>Naive BST</dt>
+            <dd>worst, same as linked list</dd>
+            <dt>AVL Tree</dt>
+            <dd>balanced</dd>
+            <dt>Splay Tree</dt>
+            <dd>best, element to be accessed always directly below root</dd>
+          </dl>
+        </dd>
+        <dt>delete in increasing order</dt>
+        <dd>
+          <dl>
+            <dt>Naive BST</dt>
+            <dd>best, element to be deleted always at root</dd>
+            <dt>AVL Tree</dt>
+            <dd>same as accessing, plus rearrangmeent overhead when deleting</dd>
+            <dt>Splay Tree</dt>
+            <dd>on first delete, smallest element is splayed, somewhat balancing the tree</dd>
+          </dl>
+        </dd>
+        <dt>insert in increasing order (repeated)</dt>
+        <dt>access in decreasing order</dt>
+        <dd>
+          <dl>
+            <dt>Naive BST</dt>
+            <dd>worst, same as linked list</dd>
+            <dt>AVL Tree</dt>
+            <dd>best, balanced (same as accessing in increasing order)</dd>
+            <dt>Splay Tree</dt>
+            <dd>on first access, largest element is splayed, somewhat balancing the tree (mirror of deleting in increasing order)</dd>
+          </dl>
+        </dd>
+        <dt>delete in decreasing order</dt>
+        <dd>
+          <dl>
+            <dt>Naive BST</dt>
+            <dd>worst, element to be deleted always at bottom of linked list</dd>
+            <dt>AVL Tree</dt>
+            <dd>balanced (same as deleting in increasing order)</dd>
+            <dt>Splay Tree</dt>
+            <dd>best, balanced from previous access operations, and every other element is found at the root</dd>
+          </dl>
+        </dd>
+        <dt>insert in random order</dt>
+        <dd>
+          <dl>
+            <dt>Naive BST</dt>
+            <dd>best, no overhead</dd>
+            <dt>AVL Tree</dt>
+            <dd>worst, height book-keeping and rotations</dd>
+            <dt>Splay Tree</dt>
+            <dd>unknown, <em>should</em>be same as Naive BST</dd>
+          </dl>
+        </dd>
+        <dt>access in same random order</dt>
+        <dd>
+          <dl>
+            <dt>Naive BST</dt>
+            <dd>best, no overhead</dd>
+            <dt>AVL Tree</dt>
+            <dd>TODO</dd>
+            <dt>Splay Tree</dt>
+            <dd>worst, splaying is useless (no multiple access, value of each access is not near previous access)</dd>
+          </dl>
+        </dd>
+        <dt>delete in same random order</dt>
+        <dd>
+          <dl>
+            <dt>Naive BST</dt>
+            <dd>best, local deletion</dd>
+            <dt>AVL Tree</dt>
+            <dd>best, local deletion</dd>
+            <dt>Splay Tree</dt>
+            <dd>worst, each deletion causes splaying that causes no benefit (no multi-access, no nearness)</dd>
+          </dl>
+        </dd>
+      </dl>
+    </div>
+  </body>
+</html>
+
