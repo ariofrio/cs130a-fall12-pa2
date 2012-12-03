@@ -4,7 +4,6 @@ LDFLAGS=
 SRC=\
      src/avl.o \
      src/binary_tree.o \
-     src/main.o \
      src/splay.o \
      src/unbalanced.o
 
@@ -15,12 +14,15 @@ HEADERS=\
      src/splay.h \
      src/unbalanced.h
 
-all: bst avl splay
+all: bst avl splay tree_testing
 
-.PHONY: all test clean
+.PHONY: all test bench clean
 
-bst: $(SRC) $(HEADERS)
-	$(CXX) $(LDFLAGS) $(SRC) -o $@
+tree_testing: $(SRC) src/tree_testing.o $(HEADERS)
+	$(CXX) $(LDFLAGS) $(SRC) src/tree_testing.o -o $@
+
+bst: $(SRC) src/main.o $(HEADERS)
+	$(CXX) $(LDFLAGS) $(SRC) src/main.o -o $@
 
 avl: bst
 	cp bst avl
@@ -28,8 +30,11 @@ avl: bst
 splay: bst
 	cp bst splay
 
-test: all
+test: bst avl splay
 	test/run_all.sh
+
+bench: tree_testing
+	./tree_testing $(BENCHFLAGS)
 
 clean:
 	rm -f $(SRC)
