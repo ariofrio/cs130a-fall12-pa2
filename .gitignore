@@ -2,5 +2,6 @@
 /avl
 /bst
 /splay
+/tree_testing
 /test/*.io.run
 tags
