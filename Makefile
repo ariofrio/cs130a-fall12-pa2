@@ -38,5 +38,5 @@ bench: tree_testing
 
 clean:
 	rm -f $(SRC)
-	rm -f bst avl splay
+	rm -f bst avl splay tree_testing
 
