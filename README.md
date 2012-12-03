@@ -27,3 +27,7 @@ Will run test cases in the `test/` folder.
 
     make bench
 
+I also made pretty graphs of the [results][] and some analysis.
+
+  [results]: http://andresriofrio.com/cs130a-fall12-pa2/
+
