@@ -44,7 +44,7 @@ void stop_stopwatch() {
 void test_1(bst* bst) {
   start_stopwatch();
   for(int x=0; x<N; x++)
-    bst->insert(x);
+    if(bst->insert(x) == false) exit(1);
   stop_stopwatch();
   start_stopwatch();
   for(int x=0; x<N; x++)
@@ -52,7 +52,7 @@ void test_1(bst* bst) {
   stop_stopwatch();
   start_stopwatch();
   for(int x=0; x<N; x++)
-    bst->erase(x);
+    if(bst->erase(x) == false) exit(1);
   stop_stopwatch();
 }
 
@@ -62,7 +62,7 @@ void test_1(bst* bst) {
 void test_2(bst* bst) {
   start_stopwatch();
   for(int x=0; x<N; x++)
-    bst->insert(x);
+    if(bst->insert(x) == false) exit(1);
   stop_stopwatch();
   start_stopwatch();
   for(int x=N-1; x>=0; x--)
@@ -70,7 +70,7 @@ void test_2(bst* bst) {
   stop_stopwatch();
   start_stopwatch();
   for(int x=N-1; x>=0; x--)
-    bst->erase(x);
+    if(bst->erase(x) == false) exit(1);
   stop_stopwatch();
 }
 
@@ -78,11 +78,11 @@ void test_2(bst* bst) {
 // access in same random order,
 // delete in same random order
 void test_3(bst* bst) {
-  std::vector<int> v(N);
+  std::vector<int> v; v.reserve(N);
   std::set<int> s;
   while(v.size() < N) {
-    int n = rand()/RAND_MAX*N*3;
-    if(s.find(n) != s.end()) { // if n is not in s
+    int n = rand();
+    if(s.find(n) == s.end()) { // if n is not in s
       v.push_back(n);
       s.insert(n);
     }
@@ -90,7 +90,7 @@ void test_3(bst* bst) {
 
   start_stopwatch();
   for(int x=0; x<N; x++)
-    bst->insert(v[x]);
+    if(bst->insert(v[x]) == false) exit(1);
   stop_stopwatch();
   start_stopwatch();
   for(int x=0; x<N; x++)
@@ -98,10 +98,9 @@ void test_3(bst* bst) {
   stop_stopwatch();
   start_stopwatch();
   for(int x=0; x<N; x++)
-    bst->erase(v[x]);
+    if(bst->erase(v[x]) == false) exit(1);
   stop_stopwatch();
 }
-
 
 void test(bst* bst) {
   if(VERBOSE) std::cout << "  test 1:" << std::endl;
@@ -112,11 +111,7 @@ void test(bst* bst) {
   test_3(bst);
 }
 
-int main(int argc, char** argv) {
-  if(argc > 1 && strcmp(argv[1], "--quiet") == 0) {
-    VERBOSE = false;
-  }
-
+void all() {
   bst* bst;
 
   if(VERBOSE) std::cout << "bst:" << std::endl;
@@ -133,5 +128,15 @@ int main(int argc, char** argv) {
   bst = new splay();
   test(bst);
   delete bst;
+}
+
+int main(int argc, char** argv) {
+  if(argc > 1 && strcmp(argv[1], "--quiet") == 0) {
+    VERBOSE = false;
+  }
+  std::cout << "== warm up runs (ignore) ==" << std::endl;
+  all();
+  std::cout << "== real run ==" << std::endl;
+  all();
 }
 
